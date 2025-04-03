@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "gQemGB9ZNHs86+4c2QArSAzwoFbHzcrk1L1EV1unoO4=",
+  "Source": "EventZenBackend",
+  "BasePath": "_content/EventZenBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

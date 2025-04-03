@@ -1,0 +1,6 @@
+@EventZenBackend_HostAddress = http://localhost:5267
+
+GET {{EventZenBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
