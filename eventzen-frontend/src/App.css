@@ -1,23 +1,27 @@
+/* Root container layout */
 #root {
-  max-width: 1280px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937; /* Tailwind's gray-800 */
+  background-color: #f9fafb; /* Tailwind's gray-50 */
 }
 
+/* Logo styles */
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  height: 4rem;
+  margin-bottom: 1rem;
+  transition: filter 300ms ease;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 1.5rem #6366f1aa); /* Tailwind indigo-500 */
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 1.5rem #61dafbaa);
 }
 
+/* Logo spin animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -26,17 +30,90 @@
     transform: rotate(360deg);
   }
 }
-
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
+  .logo.spin {
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* Card UI block */
 .card {
-  padding: 2em;
+  background: #ffffff;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  max-width: 600px;
+  transition: all 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
+/* Hints or subtext */
 .read-the-docs {
-  color: #888;
+  font-size: 0.9rem;
+  color: #6b7280; /* Tailwind gray-500 */
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Authentication container (for login/register) */
+.auth-container {
+  max-width: 420px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+.auth-container h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: #1f2937;
+}
+.auth-container input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+.auth-container input:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.auth-container button:hover {
+  background-color: #4f46e5;
+}
+
+/* Simple responsive layout */
+@media screen and (max-width: 600px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .card,
+  .auth-container {
+    margin: 1rem;
+    padding: 1.25rem;
+  }
 }

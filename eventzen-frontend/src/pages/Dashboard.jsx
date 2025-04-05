@@ -1,18 +1,39 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { FaMapMarkerAlt, FaCalendarAlt, FaSignOutAlt, FaEye, FaEdit, FaTrash } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Spinner, Toast, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  Snackbar,
+  Alert,
+  ToggleButton,
+  ToggleButtonGroup,
+  CircularProgress,
+} from "@mui/material";
+import {
+  Add as AddIcon,
+  Logout as LogoutIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Visibility as VisibilityIcon,
+  Home as HomeIcon,
+  LocationOn,
+  CalendarToday,
+} from "@mui/icons-material";
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all");
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -44,110 +65,152 @@ function Dashboard() {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEvents(events.filter((event) => event.id !== eventId));
-      toast.success("Event deleted successfully!");
+      setSnackbar({ open: true, message: "Event deleted successfully!", severity: "success" });
     } catch (error) {
-      toast.error("Failed to delete event.");
+      setSnackbar({ open: true, message: "Failed to delete event.", severity: "error" });
     }
   };
 
   const filteredEvents = events.filter((event) => {
     const now = new Date();
-    const startDate = new Date(event.startDate);
-    if (filter === "upcoming") return startDate >= now;
-    if (filter === "past") return startDate < now;
+    const start = new Date(event.startDate);
+    if (filter === "upcoming") return start >= now;
+    if (filter === "past") return start < now;
     return true;
   });
 
   return (
-    <div className="container min-vh-100 d-flex flex-column align-items-center py-5 bg-light">
-      {/* Header Section */}
-      <div className="w-100 d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold text-dark">🎉 Event Dashboard</h2>
+    <Container maxWidth="lg" sx={{ mt: 5, mb: 10 }}>
+      {/* Header */}
+      <Grid container justifyContent="space-between" alignItems="center" mb={4}>
+        <Typography variant="h4" fontWeight="bold">
+          🎉 Event Dashboard
+        </Typography>
         <div>
-          <Button onClick={() => navigate("/create-event")} variant="success" className="me-2">
-            ➕ Create Event
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<HomeIcon />}
+            onClick={() => navigate("/Home")}
+            sx={{ mr: 2 }}
+          >
+            Home
           </Button>
           <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => navigate("/create-event")}
+            sx={{ mr: 2 }}
+          >
+            Create Event
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<LogoutIcon />}
             onClick={() => {
               logout();
               navigate("/login");
             }}
-            variant="danger"
           >
-            <FaSignOutAlt className="me-2" /> Logout
+            Logout
           </Button>
         </div>
-      </div>
+      </Grid>
 
       {/* Filter Buttons */}
-      <div className="mb-3">
-        <Button
-          variant={filter === "all" ? "primary" : "secondary"}
-          className="me-2"
-          onClick={() => setFilter("all")}
+      <Grid container justifyContent="center" mb={3}>
+        <ToggleButtonGroup
+          color="primary"
+          value={filter}
+          exclusive
+          onChange={(e, val) => val && setFilter(val)}
         >
-          All Events
-        </Button>
-        <Button
-          variant={filter === "upcoming" ? "primary" : "secondary"}
-          className="me-2"
-          onClick={() => setFilter("upcoming")}
-        >
-          Upcoming
-        </Button>
-        <Button
-          variant={filter === "past" ? "primary" : "secondary"}
-          onClick={() => setFilter("past")}
-        >
-          Past
-        </Button>
-      </div>
+          <ToggleButton value="all">All Events</ToggleButton>
+          <ToggleButton value="upcoming">Upcoming</ToggleButton>
+          <ToggleButton value="past">Past</ToggleButton>
+        </ToggleButtonGroup>
+      </Grid>
 
-      {/* Error Notification */}
+      {/* Error Message */}
       {error && (
-        <Toast className="mb-3 bg-danger text-white p-3">
-          <strong>Error:</strong> {error}
-        </Toast>
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error}
+        </Alert>
       )}
 
       {/* Loading Spinner */}
       {loading ? (
-        <div className="d-flex justify-content-center align-items-center min-vh-50">
-          <Spinner animation="border" variant="primary" />
-        </div>
+        <Grid container justifyContent="center" alignItems="center" minHeight="50vh">
+          <CircularProgress />
+        </Grid>
       ) : filteredEvents.length > 0 ? (
-        <div className="row w-100 justify-content-center">
+        <Grid container spacing={3}>
           {filteredEvents.map((event) => (
-            <div key={event.id} className="col-md-4 col-sm-6 d-flex justify-content-center">
-              <div className="card shadow-lg border-0 p-3 m-3 text-center" style={{ width: "28rem" }}>
-                <h5 className="card-title fw-bold">{event.title}</h5>
-                <p className="card-text text-muted">{event.description}</p>
-                <div className="d-flex align-items-center justify-content-center text-secondary">
-                  <FaMapMarkerAlt className="me-2 text-primary" /> {event.location}
-                </div>
-                <div className="d-flex align-items-center justify-content-center text-secondary my-2">
-                  <FaCalendarAlt className="me-2 text-success" />
-                  {new Date(event.startDate).toDateString()} - {new Date(event.endDate).toDateString()}
-                </div>
-                <div className="d-flex justify-content-between mt-3">
-                  <button className="btn btn-primary d-flex align-items-center" onClick={() => navigate(`/event/${event.id}`)}>
-                    <FaEye className="me-2" /> View
-                  </button>
-                  <button className="btn btn-warning d-flex align-items-center" onClick={() => navigate(`/event/edit/${event.id}`)}>
-                    <FaEdit className="me-2" /> Edit
-                  </button>
-                  <button className="btn btn-danger d-flex align-items-center" onClick={() => handleDelete(event.id)}>
-                    <FaTrash className="me-2" /> Delete
-                  </button>
-                </div>
-              </div>
-            </div>
+            <Grid item xs={12} sm={6} md={4} key={event.id}>
+              <Card elevation={4}>
+                <CardContent>
+                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    {event.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    {event.description}
+                  </Typography>
+                  <Typography variant="body2" sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <LocationOn fontSize="small" sx={{ mr: 1 }} />
+                    {event.location}
+                  </Typography>
+                  <Typography variant="body2" sx={{ display: "flex", alignItems: "center" }}>
+                    <CalendarToday fontSize="small" sx={{ mr: 1 }} />
+                    {new Date(event.startDate).toDateString()} -{" "}
+                    {new Date(event.endDate).toDateString()}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: "space-between" }}>
+                  <Button
+                    size="small"
+                    startIcon={<VisibilityIcon />}
+                    onClick={() => navigate(`/event/${event.id}`)}
+                  >
+                    View
+                  </Button>
+                  <Button
+                    size="small"
+                    startIcon={<EditIcon />}
+                    color="warning"
+                    onClick={() => navigate(`/event/edit/${event.id}`)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    startIcon={<DeleteIcon />}
+                    color="error"
+                    onClick={() => handleDelete(event.id)}
+                  >
+                    Delete
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       ) : (
-        <p className="text-muted fs-5">No events available.</p>
+        <Typography variant="h6" color="text.secondary" align="center">
+          No events available.
+        </Typography>
       )}
-    </div>
+
+      {/* Snackbar Notification */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
+      </Snackbar>
+    </Container>
   );
 }
 

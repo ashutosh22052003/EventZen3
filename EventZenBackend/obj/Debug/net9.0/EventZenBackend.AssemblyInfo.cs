@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EventZenBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+765673fd7e90aafa64bb3fdbeea943ef90a7ce13")]
 [assembly: System.Reflection.AssemblyProductAttribute("EventZenBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EventZenBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { useAuth } from "./context/AuthContext";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import EventDetails from "./pages/EventDetails";
 import EditEvent from "./pages/EditEvent";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/event/edit/:id" element={<PrivateRoute><EditEvent /></PrivateRoute>} />
         <Route path="/create-event" element={<PrivateRoute><CreateEvent /></PrivateRoute>} />
         <Route path="/event/:id/register" element={<RegisterAttendee />} />
+        <Route path="/home" element={<Home />} />
         {/* New Attendee Management Routes */}
         <Route path="/event/:id/attendees" element={<PrivateRoute><Attendees /></PrivateRoute>} />
         <Route path="/event/:id/register" element={<PrivateRoute><RegisterAttendee /></PrivateRoute>} />

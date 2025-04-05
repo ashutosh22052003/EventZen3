@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ashutoshkumar/Downloads/EventZen2/EventZenBackend/EventZenBackend.csproj": {}
+    "/Users/ashutoshkumar/Downloads/EventZen3/EventZenBackend/EventZenBackend.csproj": {}
   },
   "projects": {
-    "/Users/ashutoshkumar/Downloads/EventZen2/EventZenBackend/EventZenBackend.csproj": {
+    "/Users/ashutoshkumar/Downloads/EventZen3/EventZenBackend/EventZenBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ashutoshkumar/Downloads/EventZen2/EventZenBackend/EventZenBackend.csproj",
+        "projectUniqueName": "/Users/ashutoshkumar/Downloads/EventZen3/EventZenBackend/EventZenBackend.csproj",
         "projectName": "EventZenBackend",
-        "projectPath": "/Users/ashutoshkumar/Downloads/EventZen2/EventZenBackend/EventZenBackend.csproj",
+        "projectPath": "/Users/ashutoshkumar/Downloads/EventZen3/EventZenBackend/EventZenBackend.csproj",
         "packagesPath": "/Users/ashutoshkumar/.nuget/packages/",
-        "outputPath": "/Users/ashutoshkumar/Downloads/EventZen2/EventZenBackend/obj/",
+        "outputPath": "/Users/ashutoshkumar/Downloads/EventZen3/EventZenBackend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ashutoshkumar/.nuget/NuGet/NuGet.Config"
